@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bob's Ink Shop | Poppa's Calligraphy</title>
+<meta name="description" content="Small-batch handmade walnut ink, simmered by Momma and hand-bottled by Poppa in reused jars and bottles. Every size is limited — shop what's in stock."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f2f2'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='60' fill='%237d5411' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="./ds/styles.css"/>
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+  .img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-neutral-200);color:var(--color-neutral-600);font-family:var(--font-body);font-size:12px;line-height:1.4;text-align:center;padding:var(--space-2)}
+  .plate img{width:100%;height:100%;object-fit:cover;display:block}
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
+  .stock-note{font-size:11px;color:color-mix(in srgb, var(--color-text) 55%, transparent)}
+  .nav{flex-wrap:wrap;row-gap:var(--space-2)}
+  .ink-mood {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    margin-top: var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+  .ink-mood img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: sepia(0.18) saturate(0.85) contrast(1.03);
+  }
+  .ink-mood::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-bg) 55%, transparent) 62%, var(--color-bg) 100%);
+  }
+
+  @media (max-width: 860px) {
+    .prod-grid{grid-template-columns:repeat(2,1fr) !important;gap:var(--space-3) !important}
+    section{padding-left:var(--space-3) !important;padding-right:var(--space-3) !important}
+    .nav > div:nth-child(2){gap:var(--space-3) !important;font-size:13px}
+    .ink-mood{height:180px}
+  }
+  @media (max-width: 560px) {
+    .prod-grid{grid-template-columns:1fr !important}
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<nav class="nav" style="justify-content:space-between">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./home.html">Home</a>
+    <a href="./shop.html">Shop ▾</a>
+    <a href="./ink-shop.html" aria-current="page">Bob's Ink Shop</a>
+    <a href="./commissions.html">Commissions</a>
+    <a href="#">About</a>
+    <a href="./contact.html">Contact</a>
+  </div>
+  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+</nav>
+
+<div class="ink-mood">
+  <img src="images/ink-hero-group.jpg" alt="An assortment of Bob's Walnut Ink bottles and jars, hand-bottled in every size on hand"/>
+</div>
+
+<section style="padding:var(--space-8) var(--space-4) var(--space-4)">
+  <div class="kicker">Small-Batch &amp; Hand-Bottled</div>
+  <h1 style="margin-bottom:var(--space-2)">Bob's Ink Shop</h1>
+  <p class="text-muted" style="max-width:64ch">Every bottle of walnut ink is simmered by Momma and hand-bottled by Poppa in whatever glass we saved that week — jam jars, soda bottles, the occasional beer bottle. Bottle shape and origin vary by the batch; you won't know exactly what you're getting until it arrives. That's part of the charm.</p>
+</section>
+
+<!-- STANDARD SIZES -->
+<section style="padding:0 var(--space-4) var(--space-6)">
+  <h2>Shop by Size</h2>
+  <p class="text-muted" style="margin-top:-4px">Stock is limited to what's been saved and simmered — once a size sells out, it's gone until the next batch.</p>
+
+  <div class="prod-grid" style="margin-top:var(--space-4)">
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-20ml.jpg" alt="Bob's Walnut Ink, 20ml sample bottle"/></div>
+      <div class="card-title">20 ml</div>
+      <div class="card-body">A taste-test size — good for trying the ink before committing to a full bottle.</div>
+      <div class="card-meta">$8</div>
+      <span class="tag tag-outline" style="align-self:flex-start">Only 2 Left</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-50ml-5oz.jpg" alt="Bob's Walnut Ink, 50ml to 5oz bottle"/></div>
+      <div class="card-title">50 ml – 5 oz</div>
+      <div class="card-meta">$14</div>
+      <span class="tag tag-neutral" style="align-self:flex-start">5 in Stock</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-5-10oz.jpg" alt="Bob's Walnut Ink, 5 to 10oz bottle"/></div>
+      <div class="card-title">5 – 10 oz</div>
+      <div class="card-meta">$18</div>
+      <span class="tag tag-neutral" style="align-self:flex-start">6 in Stock</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-10-11oz.jpg" alt="Bob's Walnut Ink, 10 to 11oz jar"/></div>
+      <div class="card-title">10 – 11 oz</div>
+      <div class="card-body">Comes in reused jam jars and Orangina (8oz) bottles.</div>
+      <div class="card-meta">$22</div>
+      <span class="tag tag-neutral" style="align-self:flex-start">21 in Stock</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-12-15oz.jpg" alt="Bob's Walnut Ink, 12 to 15oz beer bottle"/></div>
+      <div class="card-title">12 – 15 oz</div>
+      <div class="card-body">Comes in reused beer bottles (16oz), Bon Ami bottles (13oz), and Frappuccino bottles (13.7oz).</div>
+      <div class="card-meta">$26</div>
+      <span class="tag tag-neutral" style="align-self:flex-start">45 in Stock</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><div class="img-placeholder">Walnut ink — 16 to 18oz bottle</div></div>
+      <div class="card-title">16 – 18 oz</div>
+      <div class="card-meta">$30</div>
+      <span class="tag tag-neutral" style="align-self:flex-start">8 in Stock</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- SPECIAL & GIFT EDITIONS -->
+<section style="padding:var(--space-6) var(--space-4) var(--space-8)">
+  <div class="kicker">Limited to One</div>
+  <h2>Special &amp; Gift Editions</h2>
+  <p class="text-muted" style="margin-top:-4px">A step up from the everyday bottle — each of these exists in a single, uncorked-once quantity.</p>
+
+  <div class="prod-grid" style="margin-top:var(--space-4)">
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-special-reserve-26oz.jpg" alt="Bob's Walnut Ink, 26oz Special Reserve bottle, 2024 crop"/></div>
+      <div class="card-title">Special Reserve — 26 oz</div>
+      <div class="card-body">Our largest bottle, set aside as a special reserve batch.</div>
+      <div class="card-meta">$48</div>
+      <span class="tag tag-outline" style="align-self:flex-start">Only 1 Left</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-gift-edition-12oz.jpg" alt="Bob's Walnut Ink, 12oz Gift Edition with cork stopper"/></div>
+      <div class="card-title">Gift Edition w/ Cork — 12 oz</div>
+      <div class="card-body">Finished with a cork stopper for gifting.</div>
+      <div class="card-meta">$34</div>
+      <span class="tag tag-outline" style="align-self:flex-start">Only 1 Left</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><img src="images/ink-gift-edition-16oz.jpg" alt="Bob's Walnut Ink, 16oz Gift Edition with cork stopper and wax seal"/></div>
+      <div class="card-title">Gift Edition w/ Cork — 16 oz</div>
+      <div class="card-body">Finished with a cork stopper for gifting.</div>
+      <div class="card-meta">$38</div>
+      <span class="tag tag-outline" style="align-self:flex-start">Only 1 Left</span>
+      <button class="btn btn-primary btn-block">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<!--
+  PRICING NOTE: every price on this page is a placeholder, estimated from
+  market research on comparable handmade/small-batch walnut ink (Tom Norton's
+  runs ~$10 at 2oz up to ~$26 at 9.8oz; artisan Etsy sellers trend higher per
+  ounce). Confirm real pricing with Bob before this page goes live.
+-->
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+  <div style="display:flex;gap:var(--space-3)">
+    <a href="#" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a>
+    <a href="./contact.html" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" data-bg-color="#f3ede4">
+<rect width="200" height="200" fill="#f3ede4"/>
+<text x="100" y="112" font-family="serif" font-size="64" fill="#8a6a4f" text-anchor="middle">P</text>
+</svg>
+</template>
+<link rel="stylesheet" href="./ds/styles.css">
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+  details.faq{border-bottom:1px solid var(--color-divider);padding:var(--space-3) 0}
+  details.faq summary{cursor:pointer;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:16px;list-style:none}
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:'+';float:right;color:var(--color-accent)}
+  details.faq[open] summary::after{content:'–'}
+  details.faq p{margin-top:var(--space-2);font-size:14px;opacity:.85}
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<nav class="nav" data-screen-label="Contact / Nav" style="justify-content:space-between">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./Home.dc.html">Home</a>
+    <a href="./Shop.dc.html">Shop ▾</a>
+    <a href="./Commissions.dc.html">Commissions</a>
+    <a href="#">About</a>
+    <a href="./Contact.dc.html" aria-current="page">Contact</a>
+  </div>
+  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+</nav>
+
+<section data-screen-label="Contact / Header" style="padding:var(--space-8) var(--space-4) var(--space-4)">
+  <div class="kicker">We'd Love to Hear From You</div>
+  <h1 style="margin-bottom:var(--space-2)">Contact</h1>
+  <p class="text-muted" style="max-width:56ch">Questions about an order, a commission idea, or just want to say hello — reach out below.</p>
+</section>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);padding:0 var(--space-4) var(--space-8)">
+
+  <section data-screen-label="Contact / Form">
+    <form style="display:flex;flex-direction:column;gap:var(--space-3)" onsubmit="return false">
+      <div class="field">
+        <label for="name">Name</label>
+        <input class="input" id="name" type="text" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="input" id="email" type="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea class="input" id="message" placeholder="How can we help?"></textarea>
+      </div>
+      <button class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+    </form>
+    <div style="margin-top:var(--space-6)">
+      <h5 style="margin-bottom:var(--space-2)">Find Us Online</h5>
+      <div style="display:flex;gap:var(--space-3)">
+        <a href="#" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a>
+        <a href="mailto:hello@poppascalligraphy.com" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Contact / FAQ">
+    <h2 style="margin-bottom:var(--space-3)">FAQ</h2>
+    <details class="faq" open>
+      <summary>Shipping</summary>
+      <p>Most shop items ship within 3–5 business days. Originals are carefully packed and insured — allow up to a week.</p>
+    </details>
+    <details class="faq">
+      <summary>Care instructions</summary>
+      <p>Keep finished pieces out of direct sunlight. Walnut ink jars: wipe the rim after each use and store upright.</p>
+    </details>
+    <details class="faq">
+      <summary>Commission timelines</summary>
+      <p>Typical turnaround is 2–4 weeks depending on complexity — wedding season runs longer, so reach out early.</p>
+    </details>
+  </section>
+
+</div>
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+</footer>
+
+</div>
+
+</x-dc>
+</body>
+</html>

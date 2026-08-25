@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="stylesheet" href="./ds/styles.css">
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="0,0"></x-import>
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+  .sidebar-link{display:block;padding:var(--space-1) 0;font-size:14px;color:var(--color-text)}
+  .sidebar-link:hover{color:var(--color-accent)}
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<nav class="nav" data-screen-label="Shop / Nav" style="justify-content:space-between">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./Home.dc.html">Home</a>
+    <a href="./Shop.dc.html" aria-current="page">Shop ▾</a>
+    <a href="./Commissions.dc.html">Commissions</a>
+    <a href="#">About</a>
+    <a href="./Contact.dc.html">Contact</a>
+  </div>
+  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+</nav>
+
+<div style="display:grid;grid-template-columns:220px 1fr;gap:var(--space-8);padding:var(--space-8) var(--space-4)">
+
+  <aside data-screen-label="Shop / Sidebar" style="position:sticky;top:var(--space-4);align-self:start;display:flex;flex-direction:column;gap:var(--space-2)">
+    <h5 style="margin-bottom:var(--space-2)">Categories</h5>
+    <a class="sidebar-link" href="#writing-tools">Writing Instruments &amp; Tools</a>
+    <a class="sidebar-link" href="#inks">Inks &amp; Materials</a>
+    <a class="sidebar-link" href="#finished-art">Finished Art &amp; Paper Goods</a>
+    <a class="sidebar-link" href="#carved-paper">Carved Paper Art</a>
+    <a class="sidebar-link" href="#kits">Kits &amp; Experiences</a>
+    <a class="sidebar-link" href="#stationery">Stationery</a>
+  </aside>
+
+  <main style="display:flex;flex-direction:column;gap:var(--space-8)">
+    <div>
+      <h1 style="margin-bottom:var(--space-1)">Shop</h1>
+      <p class="text-muted">Solid outline &amp; a tag mark one-of-a-kind originals — everything else ships from stock.</p>
+    </div>
+
+    <section id="writing-tools" data-screen-label="Shop / Writing Instruments">
+      <h2>Writing Instruments &amp; Tools</h2>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-writing-1" placeholder="Turned dip pen holder"></image-slot></div>
+          <div class="card-title">Turned Dip Pen Holder</div>
+          <div class="card-meta">$38</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-writing-2" placeholder="Nib storage box"></image-slot></div>
+          <div class="card-title">Nib &amp; Pen Storage Box</div>
+          <div class="card-meta">$52</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="inks" data-screen-label="Shop / Inks">
+      <h2>Inks &amp; Materials</h2>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-ink-1" placeholder="Walnut ink in recycled jar"></image-slot></div>
+          <div class="card-title">Handmade Walnut Ink</div>
+          <span class="tag tag-neutral" style="align-self:flex-start">Bottled in recycled jars</span>
+          <div class="card-meta">$16</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="finished-art" data-screen-label="Shop / Finished Art">
+      <h2>Finished Art &amp; Paper Goods</h2>
+      <p class="text-muted" style="margin-top:-4px">Originals — one of a kind.</p>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-finished-1" placeholder="Custom monogram piece"></image-slot></div>
+          <div class="card-title">Custom Monogram Piece</div>
+          <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+          <a href="./Contact.dc.html" class="btn btn-secondary btn-block">Request a Similar Commission</a>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-finished-2" placeholder="Quote piece"></image-slot></div>
+          <div class="card-title">Quote Piece — "Gather"</div>
+          <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+          <a href="./Contact.dc.html" class="btn btn-secondary btn-block">Request a Similar Commission</a>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-finished-3" placeholder="Recipe card & bookplate"></image-slot></div>
+          <div class="card-title">Recipe Cards &amp; Bookplates</div>
+          <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+          <a href="./Contact.dc.html" class="btn btn-secondary btn-block">Request a Similar Commission</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="carved-paper" data-screen-label="Shop / Carved Paper Art">
+      <h2>Carved Paper Art</h2>
+      <p class="text-muted" style="margin-top:-4px">Dimensional pieces — shown from multiple angles.</p>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-carved-1" placeholder="Carved paper — front angle"></image-slot></div>
+          <div class="card-title">Carved Paper — Sunburst</div>
+          <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+          <a href="./Contact.dc.html" class="btn btn-secondary btn-block">Request a Similar Commission</a>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-carved-2" placeholder="Carved paper — macro detail"></image-slot></div>
+          <div class="card-title">Carved Paper — Botanical</div>
+          <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+          <a href="./Contact.dc.html" class="btn btn-secondary btn-block">Request a Similar Commission</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="kits" data-screen-label="Shop / Kits">
+      <h2>Kits &amp; Experiences</h2>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-kits-1" placeholder="Beginner calligraphy kit flat lay"></image-slot></div>
+          <div class="card-title">Beginner Calligraphy Kit</div>
+          <div class="card-body">Pen, nib &amp; a jar of walnut ink to start.</div>
+          <div class="card-meta">$45</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-kits-2" placeholder="Workshop-in-a-box"></image-slot></div>
+          <div class="card-title">Workshop-in-a-Box</div>
+          <div class="card-body">Includes a video walkthrough with Poppa.</div>
+          <div class="card-meta">$68</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="stationery" data-screen-label="Shop / Stationery" style="margin-bottom:var(--space-4)">
+      <h2>Stationery</h2>
+      <div class="prod-grid" style="margin-top:var(--space-4)">
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-stationery-1" placeholder="Note cards & envelopes"></image-slot></div>
+          <div class="card-title">Note Cards &amp; Envelopes</div>
+          <div class="card-meta">$14 / set of 8</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+        <div class="card">
+          <div class="plate" style="aspect-ratio:1"><image-slot id="shop-stationery-2" placeholder="Paper bookmarks"></image-slot></div>
+          <div class="card-title">Paper Bookmarks</div>
+          <div class="card-meta">$6</div>
+          <button class="btn btn-primary btn-block">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+  <div style="display:flex;gap:var(--space-3)">
+    <a href="#" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a>
+    <a href="./Contact.dc.html" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+</body>
+</html>

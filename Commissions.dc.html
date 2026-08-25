@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" data-bg-color="#f3ede4">
+<rect width="200" height="200" fill="#f3ede4"/>
+<text x="100" y="112" font-family="serif" font-size="64" fill="#8a6a4f" text-anchor="middle">P</text>
+</svg>
+</template>
+<link rel="stylesheet" href="./ds/styles.css">
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="0,0"></x-import>
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<nav class="nav" data-screen-label="Commissions / Nav" style="justify-content:space-between">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./Home.dc.html">Home</a>
+    <a href="./Shop.dc.html">Shop ▾</a>
+    <a href="./Commissions.dc.html" aria-current="page">Commissions</a>
+    <a href="#">About</a>
+    <a href="./Contact.dc.html">Contact</a>
+  </div>
+  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+</nav>
+
+<section data-screen-label="Commissions / Header" style="padding:var(--space-8) var(--space-4) var(--space-4)">
+  <div class="kicker">Made to Order</div>
+  <h1 style="margin-bottom:var(--space-2)">Commissions</h1>
+  <p class="text-muted" style="max-width:60ch">Every commissioned piece is written or carved by hand — no two come out the same. Here's the kind of work Poppa takes on.</p>
+</section>
+
+<section data-screen-label="Commissions / Types" style="padding:0 var(--space-4) var(--space-6)">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)">
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="comm-1" placeholder="Custom monogram or name piece"></image-slot></div>
+      <div class="card-title">Monograms &amp; Name Pieces</div>
+      <div class="card-body">A name, initials, or family crest lettered by hand and framed to keep.</div>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="comm-2" placeholder="Quote piece example"></image-slot></div>
+      <div class="card-title">Quotes &amp; Keepsakes</div>
+      <div class="card-body">A favorite line, verse, or vow set in calligraphy for a gift or a wall.</div>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="comm-4" placeholder="Carved paper commission"></image-slot></div>
+      <div class="card-title">Carved Paper Art</div>
+      <div class="card-body">A custom dimensional piece, hand-carved layer by layer to your idea.</div>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="comm-5" placeholder="Recipe card commission"></image-slot></div>
+      <div class="card-title">Recipe Cards &amp; Bookplates</div>
+      <div class="card-body">A handwritten recipe or bookplate, made to pass down.</div>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="comm-6" placeholder="Something else / inquire"></image-slot></div>
+      <div class="card-title">Something Else in Mind?</div>
+      <div class="card-body">If it can be written or carved — ask. Poppa likes a challenge.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section data-screen-label="Commissions / CTA" style="padding:var(--space-6) var(--space-4) var(--space-8)">
+  <div class="card" style="align-items:center;text-align:center;gap:var(--space-3);padding:var(--space-8)">
+    <div class="kicker">Ready to Start?</div>
+    <h2 style="margin:0">Tell Poppa what you're picturing</h2>
+    <p style="max-width:56ch">Fill out the contact form with your occasion, size, budget, and any reference photos — he'll write back with a timeline and pricing.</p>
+    <a href="./Contact.dc.html" class="btn btn-primary">Go to the Contact Form</a>
+  </div>
+</section>
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+</footer>
+
+</div>
+
+</x-dc>
+</body>
+</html>

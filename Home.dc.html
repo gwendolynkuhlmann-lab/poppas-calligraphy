@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="stylesheet" href="./ds/styles.css">
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="0,0"></x-import>
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+</style>
+</helmet>
+
+<nav class="nav" data-screen-label="Home / Nav" style="justify-content:space-between;max-width:1180px;margin:0 auto">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./Home.dc.html" aria-current="page">Home</a>
+    <a href="./Shop.dc.html">Shop ▾</a>
+    <a href="./Commissions.dc.html">Commissions</a>
+    <a href="#">About</a>
+    <a href="./Contact.dc.html">Contact</a>
+  </div>
+  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+</nav>
+
+<section data-screen-label="Home / Hero" style="position:relative;width:100%;height:78vh;min-height:520px;overflow:hidden;display:flex;align-items:center">
+  <image-slot id="home-hero" placeholder="Poppa at his writing desk, pen in hand" shape="rect" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(32,31,29,.72) 0%,rgba(32,31,29,.42) 45%,rgba(32,31,29,.12) 100%)"></div>
+  <div style="position:relative;max-width:1180px;margin:0 auto;padding:0 var(--space-4);width:100%">
+    <div style="max-width:46ch;color:#f8f4f4;display:flex;flex-direction:column;gap:var(--space-3)">
+      <div class="kicker" style="color:var(--color-accent-300)">Artist &amp; Craftsman</div>
+      <h1 style="margin:0;color:#f8f4f4">Original calligraphy &amp; carved paper art, made one piece at a time</h1>
+      <p style="font-size:16px;opacity:.92">Every pen, every jar of ink, every carved sheet passes through Poppa's hands before it reaches yours. Nothing here is mass-produced.</p>
+      <div style="display:flex;gap:var(--space-3);margin-top:var(--space-2)">
+        <a href="./Shop.dc.html" class="btn btn-primary" style="background:rgba(248,244,244,.06)">Explore the Shop</a>
+        <a href="./Contact.dc.html" class="btn btn-secondary" style="color:#f8f4f4;border-color:rgba(248,244,244,.6)">Request a Commission</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<hr class="hr">
+
+<section data-screen-label="Home / Featured Originals" style="padding:var(--space-6) var(--space-4)">
+  <div class="kicker">Rotating Selection</div>
+  <h2>Featured Originals</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-top:var(--space-4)">
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="home-feat-1" placeholder="Monogram piece"></image-slot></div>
+      <div class="card-title">Wildflower Monogram</div>
+      <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="home-feat-2" placeholder="Quote piece"></image-slot></div>
+      <div class="card-title">"Gather" Quote Piece</div>
+      <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="home-feat-3" placeholder="Carved paper art"></image-slot></div>
+      <div class="card-title">Carved Paper — Sunburst</div>
+      <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+    </div>
+    <div class="card">
+      <div class="plate" style="aspect-ratio:1"><image-slot id="home-feat-4" placeholder="Bookplate piece"></image-slot></div>
+      <div class="card-title">Hand-lettered Bookplate</div>
+      <span class="tag tag-outline" style="align-self:flex-start">One of a Kind</span>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section data-screen-label="Home / Shop by Category" style="padding:var(--space-6) var(--space-4)">
+  <h2>Shop by Category</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-top:var(--space-4)">
+    <a href="./Shop.dc.html#writing-tools" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-1" placeholder="Turned pen holders"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Writing Instruments &amp; Tools</div>
+    </a>
+    <a href="./Shop.dc.html#inks" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-2" placeholder="Walnut ink jars"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Inks &amp; Materials</div>
+    </a>
+    <a href="./Shop.dc.html#finished-art" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-3" placeholder="Framed calligraphy"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Finished Art &amp; Paper Goods</div>
+    </a>
+    <a href="./Shop.dc.html#carved-paper" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-4" placeholder="Carved paper macro shot"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Carved Paper Art</div>
+    </a>
+    <a href="./Shop.dc.html#kits" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-5" placeholder="Beginner kit flat lay"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Kits &amp; Experiences</div>
+    </a>
+    <a href="./Shop.dc.html#stationery" style="display:flex;flex-direction:column;gap:var(--space-2)">
+      <div class="plate" style="aspect-ratio:16/10"><image-slot id="home-cat-6" placeholder="Note cards & bookmarks"></image-slot></div>
+      <div class="card-title" style="color:var(--color-text)">Stationery</div>
+    </a>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section data-screen-label="Home / Commission Callout" style="padding:var(--space-6) var(--space-4)">
+  <div class="card" style="flex-direction:row;align-items:center;gap:var(--space-6);padding:var(--space-6)">
+    <div class="plate" style="width:220px;aspect-ratio:1;flex:none"><image-slot id="home-commission" placeholder="Past commission example"></image-slot></div>
+    <div style="flex:1">
+      <div class="kicker">Made to Order</div>
+      <h3 style="margin:0 0 var(--space-2)">Have something in mind?</h3>
+      <p style="max-width:56ch">Monograms, wedding pieces, memorial lettering, carved paper commissions — tell Poppa what you're picturing and he'll write back with timeline and pricing.</p>
+      <a href="./Contact.dc.html" class="btn btn-primary">Request a Commission</a>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section data-screen-label="Home / About Teaser" style="display:grid;grid-template-columns:1fr 1.2fr;gap:var(--space-8);padding:var(--space-6) var(--space-4);align-items:center">
+  <div class="plate" style="aspect-ratio:4/3"><image-slot id="home-about" placeholder="Poppa and Momma in the workshop"></image-slot></div>
+  <div>
+    <div class="kicker">The Family Behind It</div>
+    <h2>Poppa &amp; Momma</h2>
+    <p style="max-width:56ch">Bob turns every pen holder and carves every sheet of paper by hand. Gail simmers the walnut ink herself, batch by batch, and bottles it in recycled jars. Two crafts, one kitchen table.</p>
+    <a href="#">Read their story →</a>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section data-screen-label="Home / Instagram" style="padding:var(--space-6) var(--space-4) var(--space-8)">
+  <div class="kicker">Follow Along</div>
+  <h2 style="margin-bottom:var(--space-4)">@poppascalligraphy</h2>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-2)">
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-1" placeholder="IG post"></image-slot></div>
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-2" placeholder="IG post"></image-slot></div>
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-3" placeholder="IG post"></image-slot></div>
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-4" placeholder="IG post"></image-slot></div>
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-5" placeholder="IG post"></image-slot></div>
+    <div class="plate" style="aspect-ratio:1"><image-slot id="home-ig-6" placeholder="IG post"></image-slot></div>
+  </div>
+</section>
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+  <div style="display:flex;gap:var(--space-3)">
+    <a href="#" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a>
+    <a href="./Contact.dc.html" class="ic"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+</body>
+</html>
