@@ -72,7 +72,7 @@ body {
 }
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); }
 
-.plate{filter:sepia(0.22) saturate(0.82) contrast(1.05);box-sizing:border-box;
+.plate{filter:sepia(0.22) saturate(0.82) contrast(1.05);box-sizing:border-box;overflow:hidden;
   border:6px solid var(--color-surface);outline:1px solid var(--color-divider)}
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -253,3 +253,6 @@ textarea.input { min-height: 90px; resize: vertical; }
 .dialog-body { font-size: 14px; opacity: 0.85; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
 
+
+/* Lets the HTML "hidden" attribute override inline display styles (used to park sections we may restore) */
+[hidden]{display:none !important}
