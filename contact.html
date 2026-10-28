@@ -56,20 +56,26 @@
 <div class="contact-layout">
 
   <section>
-    <form style="display:flex;flex-direction:column;gap:var(--space-3)" onsubmit="return false">
+    <!-- Sent by FormSubmit (formsubmit.co) to Gail, cc Bob. Visitor's email becomes the reply-to. -->
+    <form id="contact-form" action="https://formsubmit.co/gailreid@charter.net" method="POST" style="display:flex;flex-direction:column;gap:var(--space-3)">
+      <input type="hidden" name="_cc" value="bobreid2156@gmail.com"/>
+      <input type="hidden" name="_subject" value="New message from the Poppa's Calligraphy website"/>
+      <input type="hidden" name="_template" value="table"/>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none"/>
       <div class="field">
         <label for="name">Name</label>
-        <input class="input" id="name" type="text" placeholder="Your name"/>
+        <input class="input" id="name" name="name" type="text" placeholder="Your name" required/>
       </div>
       <div class="field">
         <label for="email">Email</label>
-        <input class="input" id="email" type="email" placeholder="you@example.com"/>
+        <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required/>
       </div>
       <div class="field">
         <label for="message">Message</label>
-        <textarea class="input" id="message" placeholder="How can we help?"></textarea>
+        <textarea class="input" id="message" name="message" placeholder="How can we help?" required></textarea>
       </div>
-      <button class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+      <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+      <p id="contact-status" role="status" aria-live="polite" style="margin:0;font-size:14px"></p>
     </form>
     <div style="margin-top:var(--space-6)">
       <h5 style="margin-bottom:var(--space-2)">Find Us Online</h5>
@@ -104,6 +110,44 @@
 </footer>
 
 </div>
+
+<script>
+  // Send in the background so visitors stay on the page; without JS the form still posts normally.
+  (function () {
+    var form = document.getElementById('contact-form');
+    var status = document.getElementById('contact-status');
+    var button = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      status.textContent = '';
+      fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function (r) { return r.json().then(function (d) { if (!r.ok || String(d.success) !== 'true') throw d; }); })
+        .then(function () {
+          form.reset();
+          status.style.color = 'var(--color-accent-700)';
+          status.textContent = "Thank you! Your message is on its way, and we'll write back soon.";
+        })
+        .catch(function (err) {
+          var detail = err && err.message ? String(err.message) : '';
+          status.style.color = '#9b2c2c';
+          status.textContent = /activat/i.test(detail)
+            ? 'Almost there: this form needs a one-time activation. A confirmation email has been sent to the inbox it delivers to.'
+            : 'Sorry, something went wrong sending your message. Please try again in a moment.' + (detail ? ' (' + detail + ')' : '');
+          console.error('Contact form error:', err);
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.textContent = 'Send Message';
+        });
+    });
+  })();
+</script>
 
 </body>
 </html>
