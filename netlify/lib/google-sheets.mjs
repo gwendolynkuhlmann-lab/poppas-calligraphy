@@ -33,12 +33,50 @@ async function googleFetch(url, init, what) {
   }
 }
 
+const PEM_BEGIN = '-----BEGIN PRIVATE KEY-----';
+const PEM_END = '-----END PRIVATE KEY-----';
+const QUOTE_CHARS = ['"', "'", '`'];
+
+const hasSurroundingQuotes = (text) => text.length >= 2 && QUOTE_CHARS.includes(text[0]) && text.at(-1) === text[0];
+
+// Accepts the key however it was pasted into Netlify: real or literal "\n" line breaks,
+// wrapped in quotes (e.g. copied straight out of the JSON key file), or with stray
+// whitespace/newlines around it or on each line.
+function normalizePrivateKey(raw) {
+  let key = raw.trim();
+  while (hasSurroundingQuotes(key)) key = key.slice(1, -1).trim();
+  const lines = key
+    .replace(/\\r\\n|\\n|\\r/g, '\n')
+    .replace(/\r\n?/g, '\n')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+  return `${lines.join('\n')}\n`;
+}
+
+// Structural facts only — lengths, counts and booleans. Never any of the key's content.
+function describePrivateKey(raw, normalized) {
+  return {
+    length: raw.length,
+    startsWithBegin: raw.startsWith(PEM_BEGIN),
+    endsWithEnd: raw.replace(/\s+$/, '').endsWith(PEM_END),
+    literalBackslashN: (raw.match(/\\n/g) || []).length,
+    realNewlines: (raw.match(/\n/g) || []).length,
+    surroundingQuotes: hasSurroundingQuotes(raw.trim()),
+    afterCleanup: {
+      startsWithBegin: normalized.startsWith(PEM_BEGIN),
+      endsWithEnd: normalized.trimEnd().endsWith(PEM_END),
+      lines: normalized.trimEnd().split('\n').length,
+    },
+  };
+}
+
 async function getAccessToken() {
   if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) return cachedToken.token;
 
   const email = requireEnv('GOOGLE_SERVICE_ACCOUNT_EMAIL');
-  // Netlify's env UI stores the key's line breaks as literal "\n"; turn them back into newlines.
-  const privateKey = requireEnv('GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY').replace(/\\n/g, '\n');
+  const rawKey = requireEnv('GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY');
+  const privateKey = normalizePrivateKey(rawKey);
   const now = Math.floor(Date.now() / 1000);
   const encode = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64url');
   const unsigned = `${encode({ alg: 'RS256', typ: 'JWT' })}.${encode({
@@ -52,6 +90,10 @@ async function getAccessToken() {
   try {
     signature = createSign('RSA-SHA256').update(unsigned).sign(privateKey, 'base64url');
   } catch (err) {
+    console.error(
+      '[google-sheets] GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY shape (no content):',
+      JSON.stringify(describePrivateKey(rawKey, privateKey)),
+    );
     // Only the error code: Node's message is generic, but never risk echoing key material.
     throw new GoogleApiError(
       `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY could not be used to sign (${err.code || err.name}); check it is the full PEM key including BEGIN/END lines`,
