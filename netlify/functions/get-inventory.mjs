@@ -28,10 +28,8 @@ export default async () => {
       ` httpStatus=${err.status ?? 'n/a'} googleStatus=${err.googleStatus ?? 'n/a'}` +
       ` message=${JSON.stringify(err.message)}`,
     );
-    // TEMPORARY while debugging the branch deploy: `reason` is a short, non-sensitive code
-    // (e.g. "sheets_http_403"). Remove it from the response once inventory loads.
     return Response.json(
-      { error: 'Inventory is unavailable right now.', reason },
+      { error: 'Inventory is unavailable right now.' },
       { status: 502, headers: { 'Cache-Control': 'no-store' } },
     );
   }
