@@ -88,3 +88,19 @@ All product/scene photography is currently **placeholder** (`<image-slot>` drag-
 - `ds/styles.css` — the full design-system stylesheet (tokens + component classes).
 - `design-system-readme.md` — design system rationale, do/don't guidance, full component reference.
 - `image-slot.js` — the prototype's placeholder-image web component; not needed in the rebuild, included for reference only (shows where/what images go).
+
+## Shop: Inventory & Checkout
+Standard shop items (currently Bob's Ink Shop) are sold through Stripe Checkout, with stock kept in a Google Sheet. Commission originals are separate: a request form plus a Stripe Payment Link sent by hand, which these functions ignore.
+
+- `netlify/functions/get-inventory.mjs` reads the sheet's **Master Inventory** tab; the Ink Shop page (`js/shop.js`) shows live price and stock for each card marked `data-sku`.
+- `netlify/functions/create-checkout.mjs` starts a Stripe Checkout Session, re-reading the sheet so the price charged is always the sheet's current price.
+- `netlify/functions/stripe-webhook.mjs` handles `checkout.session.completed`: it logs an `ORDER TO SHIP` line (buyer, email, address, items) and subtracts what was bought from **Quantity** on the **Easy Edit** tab.
+- Environment variables are listed and explained in `.env.example`; set them in Netlify, never in the repo.
+
+**TODO: Shipping price and countries still to be decided before going live.** Checkout currently collects a US-only shipping address and charges nothing for shipping (see the TODO in `create-checkout.mjs`).
+
+### Before going live
+- [ ] Decide the shipping price and which countries to ship to, then update `create-checkout.mjs` (remove its TODO and this one).
+- [ ] Switch Stripe from test to live keys: set `STRIPE_SECRET_KEY` to the live `sk_live_…` key in Netlify.
+- [ ] Create the live-mode webhook endpoint in Stripe (`https://<site>/.netlify/functions/stripe-webhook`, event `checkout.session.completed`) and set `STRIPE_WEBHOOK_SECRET` to its live signing secret. Test-mode and live-mode secrets are different.
+- [ ] Re-check the inventory Google Sheet is shared with the service account email (`GOOGLE_SERVICE_ACCOUNT_EMAIL`) as an **Editor**, so the webhook can update stock.

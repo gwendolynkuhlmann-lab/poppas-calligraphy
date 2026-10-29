@@ -110,9 +110,13 @@
 
   var outcome = new URLSearchParams(window.location.search).get('checkout');
   if (outcome === 'success') {
-    showStatus('Thank you! Your order is confirmed, and a receipt is on its way to your email.', 'success');
+    showStatus("Thank you! Your order is confirmed. We'll be in touch about shipping.", 'success');
   } else if (outcome === 'cancelled') {
     showStatus('Checkout was cancelled, and nothing was charged.');
+  }
+  if (outcome && window.history.replaceState) {
+    // Drop ?checkout=… so a refresh or a shared link doesn't show the message again.
+    window.history.replaceState(null, '', window.location.pathname + window.location.hash);
   }
 
   loadInventory();

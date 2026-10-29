@@ -70,6 +70,8 @@ export default async (req) => {
     const session = await stripeRequest('POST', '/checkout/sessions', {
       mode: 'payment',
       line_items: lineItems,
+      // TODO: Shipping price and countries still to be decided before going live.
+      // For now: US addresses only, and no shipping charge (no shipping_options sent).
       shipping_address_collection: { allowed_countries: ['US'] },
       metadata: { source: SHOP_SOURCE },
       payment_intent_data: { metadata: { source: SHOP_SOURCE } },
