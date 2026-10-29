@@ -256,3 +256,21 @@ textarea.input { min-height: 90px; resize: vertical; }
 
 /* Lets the HTML "hidden" attribute override inline display styles (used to park sections we may restore) */
 [hidden]{display:none !important}
+
+/* Cart link in the nav, with an outlined item-count badge (color as stroke, not fill) */
+.cart-link { position: relative; display: inline-block; }
+.cart-count {
+  position: absolute; top: -8px; right: -11px;
+  min-width: 17px; height: 17px; padding: 0 4px;
+  border: 1px solid var(--color-accent); border-radius: 9px;
+  background: var(--color-bg); color: var(--color-accent-700);
+  font: 600 10px/15px var(--font-body); text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shop notices: stock problems, thank-you after payment, cancelled checkout */
+.shop-status { max-width: 64ch; margin-top: var(--space-3); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-divider); border-radius: var(--radius-sm); font-size: 14px; }
+.shop-status p { margin: 0; }
+.shop-status p + p { margin-top: var(--space-1); }
+.shop-status-success { border-color: var(--color-accent); color: var(--color-accent-700); }
+.shop-status-error { border-color: #9b2c2c; color: #9b2c2c; }

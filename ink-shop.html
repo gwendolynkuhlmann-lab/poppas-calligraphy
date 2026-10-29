@@ -17,9 +17,6 @@
   .plate img{width:100%;height:100%;object-fit:cover;display:block}
   .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
   .stock-note{font-size:11px;color:color-mix(in srgb, var(--color-text) 55%, transparent)}
-  .shop-status{max-width:64ch;margin-top:var(--space-3);padding:var(--space-2) var(--space-3);border:1px solid var(--color-divider);border-radius:var(--radius-sm);font-size:14px}
-  .shop-status-success{border-color:var(--color-accent);color:var(--color-accent-700)}
-  .shop-status-error{border-color:#9b2c2c;color:#9b2c2c}
   .card.is-sold-out .plate{opacity:.55}
   .nav{flex-wrap:wrap;row-gap:var(--space-2)}
   .ink-mood {
@@ -64,7 +61,7 @@
     <a href="#" hidden>About</a>
     <a href="./contact.html">Contact</a>
   </div>
-  <a href="#" class="ic" title="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+  <a href="./cart.html" class="ic cart-link" title="Cart" aria-label="Cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" data-cart-count hidden>0</span></a>
 </nav>
 
 <div class="ink-mood">
@@ -209,6 +206,7 @@
 
 </div>
 
+<script src="./js/cart.js"></script>
 <script src="./js/shop.js"></script>
 </body>
 </html>

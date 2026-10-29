@@ -1,5 +1,7 @@
-// POST /.netlify/functions/create-checkout   body: { items: [{ sku, quantity }] }
-// Creates a Stripe Checkout Session for standard shop items and returns { url }.
+// POST /.netlify/functions/create-checkout   body: { items: [{ sku, quantity }, ...] }
+// Creates one Stripe Checkout Session for every item in the cart and returns { url }.
+// If any item can't be sold as asked, nothing is created and the reply lists every problem
+// ({ error, problems: [{ sku, name, reason, available }] }) so the cart can fix them all at once.
 // Price, name and available stock come from a fresh read of the sheet — never from the
 // browser — so whatever is in the sheet right now is what gets charged.
 // Commission originals don't come through here; they use hand-sent Stripe Payment Links.
@@ -8,7 +10,9 @@ import { stripeRequest, SHOP_SOURCE } from '../lib/stripe.mjs';
 
 const SKU_PATTERN = /^[A-Za-z0-9_-]{1,32}$/;
 const MAX_LINE_ITEMS = 20;
-const SESSION_MINUTES = 30; // Stripe's minimum; keeps the gap between stock check and payment short
+// Stripe's minimum is 30 minutes after it creates the session; asking for exactly 30 from
+// our clock falls a moment short by the time Stripe sees it, and Stripe rejects the request.
+const SESSION_MINUTES = 35; // still keeps the gap between stock check and payment short
 
 const reply = (status, body) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
 
@@ -44,14 +48,23 @@ export default async (req) => {
   }
   const bySku = new Map(inventory.map((item) => [item.sku, item]));
 
+  // Check every item before creating anything, and report every problem at once.
+  const problems = [];
   const lineItems = [];
   for (const [sku, quantity] of wanted) {
     const item = bySku.get(sku);
     if (!item || item.price === null) {
-      return reply(409, { error: "Sorry, that item isn't available to buy right now.", sku });
+      problems.push({ sku, name: item?.name ?? null, reason: 'unavailable', available: 0, message: "Sorry, that item isn't available to buy right now." });
+      continue;
     }
-    if (!item.inStock) return reply(409, { error: `Sorry, ${item.name} is sold out.`, sku });
-    if (item.quantity < quantity) return reply(409, { error: `Sorry, only ${item.quantity} left of ${item.name}.`, sku });
+    if (!item.inStock) {
+      problems.push({ sku, name: item.name, reason: 'sold_out', available: 0, message: `Sorry, ${item.name} is sold out.` });
+      continue;
+    }
+    if (item.quantity < quantity) {
+      problems.push({ sku, name: item.name, reason: 'insufficient', available: item.quantity, message: `Sorry, only ${item.quantity} left of ${item.name}.` });
+      continue;
+    }
 
     lineItems.push({
       quantity,
@@ -65,7 +78,17 @@ export default async (req) => {
     });
   }
 
-  const site = process.env.URL || new URL(req.url).origin;
+  if (problems.length) {
+    return reply(409, {
+      error: problems.length === 1 ? problems[0].message : 'Some items in your cart have changed. Please review your cart and try again.',
+      sku: problems[0].sku,
+      problems: problems.map(({ message, ...problem }) => problem),
+    });
+  }
+
+  // Send shoppers back to the site they came from. On a branch deploy, process.env.URL is the
+  // production address, so prefer the address this request actually arrived at.
+  const site = new URL(req.url).origin || process.env.URL;
   try {
     const session = await stripeRequest('POST', '/checkout/sessions', {
       mode: 'payment',
@@ -76,7 +99,7 @@ export default async (req) => {
       metadata: { source: SHOP_SOURCE },
       payment_intent_data: { metadata: { source: SHOP_SOURCE } },
       success_url: `${site}/ink-shop.html?checkout=success`,
-      cancel_url: `${site}/ink-shop.html?checkout=cancelled`,
+      cancel_url: `${site}/cart.html?checkout=cancelled`,
       expires_at: Math.floor(Date.now() / 1000) + SESSION_MINUTES * 60,
     });
     return reply(200, { url: session.url });

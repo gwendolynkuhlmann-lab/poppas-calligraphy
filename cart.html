@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Your Cart | Poppa's Calligraphy</title>
+<meta name="description" content="Review the walnut ink in your cart and check out."/>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f2f2'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='60' fill='%237d5411' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="./ds/styles.css"/>
+<style>
+  .ic{width:19px;height:19px}
+  .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  a{color:var(--color-accent);text-decoration:none}
+  a:hover{color:var(--color-accent-700);text-decoration:underline}
+  .kicker{font:600 11px var(--font-heading);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin:0 0 var(--space-2)}
+  .nav{flex-wrap:wrap;row-gap:var(--space-2)}
+
+  .cart-layout{display:grid;grid-template-columns:1fr 320px;gap:var(--space-6);align-items:start;padding:0 var(--space-4) var(--space-8)}
+  .cart-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--color-divider)}
+  .cart-row{display:grid;grid-template-columns:72px 1fr auto 80px auto;gap:var(--space-3);align-items:center;padding:var(--space-3) 0;border-bottom:1px solid var(--color-divider)}
+  .cart-thumb{width:72px;aspect-ratio:1}
+  .cart-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .cart-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .cart-unit{font-size:13px}
+  .cart-note{font-size:12px;color:var(--color-accent-700)}
+  .cart-qty{display:flex;align-items:center;gap:var(--space-2)}
+  .cart-qty .btn-icon{width:32px;height:32px;font-size:16px;line-height:1}
+  .cart-qty-value{min-width:2ch;text-align:center;font-variant-numeric:tabular-nums}
+  .cart-line-total{text-align:right;font-variant-numeric:tabular-nums}
+  .cart-remove{font-size:13px}
+  .cart-summary{display:flex;flex-direction:column;gap:var(--space-3)}
+  .cart-subtotal-row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-heading);font-size:22px}
+  .cart-small{font-size:13px;margin:0}
+  .cart-error{margin:0;padding:var(--space-2) var(--space-3);border:1px solid #9b2c2c;border-radius:var(--radius-sm);color:#9b2c2c;font-size:14px}
+  .cart-empty{padding:var(--space-6) 0;display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start}
+
+  @media (max-width: 860px) {
+    .cart-layout{grid-template-columns:1fr;padding:0 var(--space-3) var(--space-6)}
+    section{padding-left:var(--space-3) !important;padding-right:var(--space-3) !important}
+    .nav > div:nth-child(2){gap:var(--space-3) !important;font-size:13px}
+    .cart-row{grid-template-columns:64px 1fr auto;grid-template-areas:"thumb info total" "thumb qty remove"}
+    .cart-thumb{grid-area:thumb;width:64px}
+    .cart-info{grid-area:info}
+    .cart-qty{grid-area:qty}
+    .cart-line-total{grid-area:total}
+    .cart-remove{grid-area:remove;justify-self:end}
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width:1180px;margin:0 auto">
+
+<nav class="nav" style="justify-content:space-between">
+  <div class="nav-brand">Poppa's Calligraphy</div>
+  <div style="display:flex;gap:var(--space-4);align-items:center">
+    <a href="./home.html">Home</a>
+    <a href="./shop.html" hidden>Shop ▾</a>
+    <a href="./ink-shop.html">Bob's Ink Shop</a>
+    <a href="./commissions.html">Originals &amp; Commissions</a>
+    <a href="#" hidden>About</a>
+    <a href="./contact.html">Contact</a>
+  </div>
+  <a href="./cart.html" class="ic cart-link" title="Cart" aria-label="Cart" aria-current="page"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" data-cart-count hidden>0</span></a>
+</nav>
+
+<section style="padding:var(--space-8) var(--space-4) var(--space-4)">
+  <div class="kicker">Bob's Ink Shop</div>
+  <h1 style="margin-bottom:var(--space-2)">Your Cart</h1>
+  <div id="shop-status" class="shop-status" role="status" aria-live="polite" hidden></div>
+</section>
+
+<div class="cart-layout">
+  <section aria-label="Items in your cart" style="padding:0">
+    <ul id="cart-items" class="cart-list"></ul>
+    <div id="cart-empty" class="cart-empty" hidden>
+      <p style="margin:0">Your cart is empty.</p>
+      <a href="./ink-shop.html" class="btn btn-secondary">Browse Bob's Ink Shop</a>
+    </div>
+  </section>
+
+  <aside id="cart-summary" class="card cart-summary" aria-label="Order summary" hidden>
+    <div class="cart-subtotal-row"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+    <p class="text-muted cart-small">You'll enter your shipping address on the next page, and we'll be in touch about shipping once your order is in.</p>
+    <p id="cart-error" class="cart-error" role="alert" hidden></p>
+    <button id="cart-checkout" type="button" class="btn btn-primary btn-block" disabled>Checking Stock…</button>
+    <a href="./ink-shop.html" class="cart-small" style="align-self:center">Continue shopping</a>
+  </aside>
+</div>
+
+<hr class="hr">
+<footer style="padding:var(--space-4);display:flex;justify-content:space-between;align-items:center">
+  <span class="text-muted" style="font-size:12px">© 2026 Poppa's Calligraphy</span>
+</footer>
+
+</div>
+
+<script src="./js/cart.js"></script>
+<script src="./js/cart-page.js"></script>
+</body>
+</html>

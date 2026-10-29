@@ -1,14 +1,14 @@
-// Live price and stock for shop cards marked data-sku, and Stripe Checkout on "Buy Now".
+// Live price and stock for shop cards marked data-sku, and "Add to Cart" (js/cart.js).
 // Prices and stock come from the inventory sheet via /.netlify/functions/get-inventory;
 // the price shown here is display only — create-checkout re-reads the sheet before charging.
 (function () {
   var INVENTORY_URL = '/.netlify/functions/get-inventory';
-  var CHECKOUT_URL = '/.netlify/functions/create-checkout';
   var LOW_STOCK = 2; // at or below this, the tag reads "Only N Left"
+  var ADDED_MS = 1600; // how long the button says "Added"
 
   var cards = document.querySelectorAll('.card[data-sku]');
   var status = document.getElementById('shop-status');
-  if (!cards.length) return;
+  var inventory = {}; // sku -> item from the sheet
 
   function showStatus(message, tone) {
     if (!status) return;
@@ -34,11 +34,11 @@
   }
 
   function render(items) {
-    var bySku = {};
-    items.forEach(function (item) { bySku[item.sku] = item; });
+    inventory = {};
+    items.forEach(function (item) { inventory[item.sku] = item; });
 
     cards.forEach(function (card) {
-      var item = bySku[card.dataset.sku];
+      var item = inventory[card.dataset.sku];
       card.classList.remove('is-sold-out');
       if (!item || item.price === null) {
         setTag(card, 'Coming Soon', false);
@@ -54,11 +54,12 @@
       }
       var low = item.quantity <= LOW_STOCK;
       setTag(card, low ? 'Only ' + item.quantity + ' Left' : item.quantity + ' in Stock', low);
-      setButton(card, 'Buy Now', true);
+      setButton(card, 'Add to Cart', true);
     });
   }
 
   function loadInventory() {
+    if (!cards.length) return;
     cards.forEach(function (card) { setButton(card, 'Checking Stock…', false); });
     fetch(INVENTORY_URL, { headers: { Accept: 'application/json' } })
       .then(function (res) {
@@ -73,46 +74,35 @@
       });
   }
 
-  function startCheckout(card) {
-    setButton(card, 'Starting Checkout…', false);
-    showStatus('');
-    fetch(CHECKOUT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ items: [{ sku: card.dataset.sku, quantity: 1 }] })
-    })
-      .then(function (res) {
-        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
-      })
-      .then(function (result) {
-        if (result.ok && result.data.url) {
-          window.location.href = result.data.url;
-          return;
-        }
-        throw new Error(result.data.error || 'Checkout could not start.');
-      })
-      .catch(function (err) {
-        showStatus(err.message || 'Checkout could not start. Please try again.', 'error');
-        setButton(card, 'Buy Now', true);
-      });
+  function addToCart(card) {
+    var item = inventory[card.dataset.sku];
+    var button = card.querySelector('button');
+    if (!item || !window.PoppasCart) return;
+    var image = card.querySelector('.plate img');
+    var result = window.PoppasCart.add(
+      { sku: item.sku, name: item.name, price: item.price, image: image ? image.getAttribute('src') : '' },
+      1,
+      item.quantity
+    );
+    setButton(card, result.capped ? 'All ' + item.quantity + ' in Your Cart' : 'Added ✓', false);
+    clearTimeout(button._resetTimer);
+    button._resetTimer = setTimeout(function () { setButton(card, 'Add to Cart', true); }, ADDED_MS);
   }
 
   document.addEventListener('click', function (e) {
     var button = e.target.closest('.card[data-sku] button');
-    if (button && !button.disabled) startCheckout(button.closest('.card'));
+    if (button && !button.disabled) addToCart(button.closest('.card'));
   });
 
-  // Coming back from Stripe with the browser's Back button restores the page as it was
-  // ("Starting Checkout…"), so refresh stock instead.
+  // Coming back with the browser's Back button restores the page as it was, so refresh stock.
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) loadInventory();
   });
 
   var outcome = new URLSearchParams(window.location.search).get('checkout');
   if (outcome === 'success') {
+    if (window.PoppasCart) window.PoppasCart.clear();
     showStatus("Thank you! Your order is confirmed. We'll be in touch about shipping.", 'success');
-  } else if (outcome === 'cancelled') {
-    showStatus('Checkout was cancelled, and nothing was charged.');
   }
   if (outcome && window.history.replaceState) {
     // Drop ?checkout=… so a refresh or a shared link doesn't show the message again.

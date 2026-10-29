@@ -93,7 +93,8 @@ All product/scene photography is currently **placeholder** (`<image-slot>` drag-
 Standard shop items (currently Bob's Ink Shop) are sold through Stripe Checkout, with stock kept in a Google Sheet. Commission originals are separate: a request form plus a Stripe Payment Link sent by hand, which these functions ignore.
 
 - `netlify/functions/get-inventory.mjs` reads the sheet's **Master Inventory** tab; the Ink Shop page (`js/shop.js`) shows live price and stock for each card marked `data-sku`.
-- `netlify/functions/create-checkout.mjs` starts a Stripe Checkout Session, re-reading the sheet so the price charged is always the sheet's current price.
+- **Cart:** "Add to Cart" stores items in the browser (`js/cart.js`, localStorage with an in-memory fallback if storage is blocked); every page's nav shows the cart count. `cart.html` (`js/cart-page.js`) re-checks the cart against the sheet on load (prices updated, quantities capped to stock, sold-out items removed with a message) and sends all items to checkout at once.
+- `netlify/functions/create-checkout.mjs` starts one Stripe Checkout Session for the whole cart, re-reading the sheet so the price charged is always the sheet's current price and every item's stock is checked. If anything can't be sold as asked, it creates nothing and lists every problem so the cart can fix them.
 - `netlify/functions/stripe-webhook.mjs` handles `checkout.session.completed`: it logs an `ORDER TO SHIP` line (buyer, email, address, items) and subtracts what was bought from **Quantity** on the **Easy Edit** tab.
 - Environment variables are listed and explained in `.env.example`; set them in Netlify, never in the repo.
 
