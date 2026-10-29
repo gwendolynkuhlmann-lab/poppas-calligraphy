@@ -22,9 +22,16 @@ export default async () => {
       },
     });
   } catch (err) {
-    console.error('[get-inventory] Could not read the inventory sheet:', err);
+    const reason = err.reason || 'unexpected_error';
+    console.error(
+      `[get-inventory] Could not read the inventory sheet: reason=${reason}` +
+      ` httpStatus=${err.status ?? 'n/a'} googleStatus=${err.googleStatus ?? 'n/a'}` +
+      ` message=${JSON.stringify(err.message)}`,
+    );
+    // TEMPORARY while debugging the branch deploy: `reason` is a short, non-sensitive code
+    // (e.g. "sheets_http_403"). Remove it from the response once inventory loads.
     return Response.json(
-      { error: 'Inventory is unavailable right now.' },
+      { error: 'Inventory is unavailable right now.', reason },
       { status: 502, headers: { 'Cache-Control': 'no-store' } },
     );
   }
