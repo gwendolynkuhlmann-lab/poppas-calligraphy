@@ -70,9 +70,6 @@ export default async (req) => {
     const session = await stripeRequest('POST', '/checkout/sessions', {
       mode: 'payment',
       line_items: lineItems,
-      // Cards only (includes Apple Pay / Google Pay): payment is final at checkout, so stock
-      // is decremented once, with no delayed-payment reversals to handle.
-      payment_method_types: ['card'],
       shipping_address_collection: { allowed_countries: ['US'] },
       metadata: { source: SHOP_SOURCE },
       payment_intent_data: { metadata: { source: SHOP_SOURCE } },
